@@ -1,2 +1,3 @@
 data/vqa_rad
 llava.egg-info
+__pycache__
