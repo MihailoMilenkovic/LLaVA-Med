@@ -4,7 +4,7 @@ weights_path_finetuned=$HOME/llava-weights-finetuned-vqa-rad
 weights_path_og=$HOME/llava-weights-og
 repo_dir=$HOME/git/LLaVA-Med
 
-use_finetuned_model=false
+use_finetuned_model=true
 
 if [ "$use_finetuned_model" = "true" ]; then
     weights_path="$weights_path_finetuned"
