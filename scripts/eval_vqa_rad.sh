@@ -4,20 +4,20 @@ weights_path_finetuned=$HOME/llava-weights-finetuned-vqa-rad
 weights_path_og=$HOME/llava-weights-og
 repo_dir=$HOME/git/LLaVA-Med
 
-use_finetuned_model=true
+use_finetuned_model=false
 
 if [ "$use_finetuned_model" = "true" ]; then
     weights_path="$weights_path_finetuned"
-    model_type="base"
+    model_type="finetuned"
 else
     weights_path="$weights_path_og"
-    model_type="finetuned"
+    model_type="base"
 fi
 
 
 answer_path="$repo_dir/data/finetune-vqa-rad-results-$model_type.json"
 test_question_folder="$repo_dir/data/vqa_rad/test"
-test_question_file="$test_question_folder/questions.jsonl"
+test_question_file="$test_question_folder/data.json"
 test_image_path="$test_question_folder/images"
 echo "loading weights from $weights_path"
 echo "saving answers to $answer_path"
@@ -25,7 +25,7 @@ echo "saving answers to $answer_path"
 generate_new_answers=true
 
 if [ "$generate_new_answers" = "true" ]; then
-    python $par_dir/llava/eval/model_vqa.py \
+    python $par_dir/llava/eval/model_vqa_med.py \
         --model-name $weights_path\
         --question-file $test_question_file \
         --image-folder $test_image_path \
