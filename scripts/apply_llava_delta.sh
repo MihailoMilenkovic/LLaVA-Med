@@ -1,5 +1,5 @@
-output_dir=$HOME/llava-weights-og
+weights_path_og=$HOME/llava-weights-og
 python3 -m llava.model.apply_delta \
     --base huggyllama/llama-7b \
-    --target $output_dir \
+    --target $weights_path_og \
     --delta microsoft/llava-med-7b-delta
