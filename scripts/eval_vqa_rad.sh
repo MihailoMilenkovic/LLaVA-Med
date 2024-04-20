@@ -11,16 +11,25 @@ else
 fi
 
 
-answer_dir="/home/mmilenkovic/git/LLaVA-Med/data/finetune-vqa-rad-results.json"
+answer_path="/home/mmilenkovic/git/LLaVA-Med/data/finetune-vqa-rad-results.json"
 test_question_folder="/home/mmilenkovic/git/LLaVA-Med/data/vqa_rad/test"
-test_question_file="$test_question_folder/test.json"
+test_question_file="$test_question_folder/questions.jsonl"
 test_image_path="$test_question_folder/images"
 echo "loading weights from $weights_path"
-echo "saving answers to $answer_dir"
+echo "saving answers to $answer_path"
 
-python $par_dir/llava/eval/model_vqa.py \
-    --model-name $weights_path\
-    --question-file $test_question_file \
-    --image-folder $test_image_path \
-    --answers-file $answer_dir 
+generate_new_answers=false
+
+if [ "$generate_new_answers" = "true" ]; then
+    python $par_dir/llava/eval/model_vqa.py \
+        --model-name $weights_path\
+        --question-file $test_question_file \
+        --image-folder $test_image_path \
+        --answers-file $answer_path 
+fi
+
+python $script_dir/process_vqa_rad_answers.py \
+    --answers_file $answer_path \
+    --test_data_file $test_question_folder/data.json
+
    

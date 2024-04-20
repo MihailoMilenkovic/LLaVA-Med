@@ -130,9 +130,9 @@ def eval_model(args):
         model.model.mm_projector = mm_projector.cuda().half()
         model.model.vision_tower = [vision_tower]
 
-    with open(os.path.expanduser(args.question_file), "r") as f:
-        questions = json.load(f)
-    # questions = [json.loads(q) for q in open(os.path.expanduser(args.question_file), "r")]
+    questions = [
+        json.loads(q) for q in open(os.path.expanduser(args.question_file), "r")
+    ]
     questions = get_chunk(questions, args.num_chunks, args.chunk_idx)
     answers_file = os.path.expanduser(args.answers_file)
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)

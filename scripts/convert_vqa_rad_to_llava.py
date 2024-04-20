@@ -6,7 +6,7 @@ from PIL import Image
 from datasets import load_dataset, Dataset
 
 
-def save_data_to_dir(dataset: Dataset, output_dir: str):
+def save_data_to_dir(dataset: Dataset, output_dir: str, image_output_dir: str):
     json_data = []
     for i, data in enumerate(dataset):
         image_id = str(i)
@@ -14,7 +14,7 @@ def save_data_to_dir(dataset: Dataset, output_dir: str):
         image_data = data["image"]
         image_data.save(
             os.path.join(
-                output_dir,
+                image_output_dir,
                 image_path,
             )
         )  # Save image
@@ -46,10 +46,10 @@ def prepare_test_questions(
 ):
     output_data = []
     for i, data in enumerate(dataset):
-        image_id = str(i)
+        image_path = f"{i}.jpg"
         text = data["question"]
-        category = "medical-vqa"
-        new_data = {"question_id": image_id, "text": text, "category": category}
+        question_id = f"{i}"
+        new_data = {"image": image_path, "text": text, "question_id": question_id}
         output_data.append(new_data)
     output_path = os.path.join(output_folder, output_name)
     with open(output_path, "w") as file:
@@ -83,8 +83,8 @@ def main():
     train_data = dataset["train"]
     test_data = dataset["test"]
 
-    save_data_to_dir(train_data, train_folder)
-    save_data_to_dir(test_data, test_folder)
+    save_data_to_dir(train_data, train_folder, train_image_folder)
+    save_data_to_dir(test_data, test_folder, test_image_folder)
     prepare_test_questions(test_data, output_folder=test_folder)
 
 
