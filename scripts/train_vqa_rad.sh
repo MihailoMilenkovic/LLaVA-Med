@@ -1,16 +1,20 @@
 script_dir=$(dirname "$(readlink -f "$0")")
 par_dir=$(dirname "$script_dir")
+weight_dir_og=$HOME/llava-weights-og
+weight_dir_finetuned=$HOME/llava-weights-finetuned-vqa-rad
+repo_dir=$HOME/git/LLaVA-Med
+
 torchrun --nnodes=1 --nproc_per_node=1 --master_port=25001 \
     $par_dir/llava/train/train_mem.py \
-    --model_name_or_path /home/mmilenkovic/llava-weights-og \
-    --data_path /home/mmilenkovic/git/LLaVA-Med/data/vqa_rad/train/train.json \
-    --image_folder /home/mmilenkovic/git/LLaVA-Med/data/vqa_rad/train/images \
+    --model_name_or_path $weight_dir \
+    --data_path $repo_dir/data/vqa_rad/train/train.json \
+    --image_folder $repo_dir/data/vqa_rad/train/images \
     --vision_tower openai/clip-vit-large-patch14 \
     --mm_vision_select_layer -2 \
     --mm_use_im_start_end True \
     --tune_mm_mlp_adapter True \
     --bf16 True \
-    --output_dir /home/mmilenkovic/llava-weights-finetuned-vqa-rad \
+    --output_dir $weight_dir_finetuned \
     --num_train_epochs 1 \
     --per_device_train_batch_size 1 \
     --per_device_eval_batch_size 1 \
