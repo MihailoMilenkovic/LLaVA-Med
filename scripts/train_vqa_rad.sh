@@ -2,6 +2,7 @@ script_dir=$(dirname "$(readlink -f "$0")")
 par_dir=$(dirname "$script_dir")
 weight_dir_og=$HOME/llava-weights-og
 weight_dir_finetuned=$HOME/llava-weights-finetuned-vqa-rad
+rm -rf $weight_dir_finetuned
 repo_dir=$HOME/git/LLaVA-Med
 
 torchrun --nnodes=1 --nproc_per_node=1 --master_port=25001 \

@@ -1,4 +1,7 @@
 data/vqa_rad
+data/vqa_rad_data
+data/vqa_rad_old
+data/vqa_rad_tst
 llava.egg-info
 __pycache__
 wandb
