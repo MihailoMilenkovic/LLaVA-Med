@@ -1,6 +1,6 @@
 script_dir=$(dirname "$(readlink -f "$0")")
 par_dir=$(dirname "$script_dir")
-weights_path_finetuned=$HOME/llava-weights-finetuned-vqa-rad 
+weights_path_finetuned=$HOME/llava-weights-finetuned-vqa-rad
 weights_path_og=$HOME/llava-weights-og
 repo_dir=$HOME/git/LLaVA-Med
 
@@ -22,11 +22,11 @@ test_image_path="$test_question_folder/images"
 echo "loading weights from $weights_path"
 echo "saving answers to $answer_path"
 
-generate_new_answers=true
+generate_new_answers=false
 
 if [ "$generate_new_answers" = "true" ]; then
     python $par_dir/llava/eval/model_vqa_med.py \
-        --model-name $weights_path\
+        --model-name $weights_path \
         --question-file $test_question_file \
         --image-folder $test_image_path \
         --answers-file $answer_path 

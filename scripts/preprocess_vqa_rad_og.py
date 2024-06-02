@@ -60,7 +60,10 @@ class VQA_RAD_dataset:
                 "id": i,
                 "image": data.image_name,
                 "conversations": [
-                    {"from": "human", "value": f"<image>\n{data.question}"},
+                    {
+                        "from": "human",
+                        "value": f"{data.question}\n<image>",
+                    },
                     {"from": "gpt", "value": data.answer},
                 ],
             }
@@ -150,5 +153,5 @@ if __name__ == "__main__":
     train_images = set(d.image_name for d in train_dataset.data)
     print("intersection:", test_images.intersection(train_images))
 
-    train_dataset.save(dataset_train_location, include_question_type=False)
+    train_dataset.save(dataset_train_location, include_question_type=True)
     test_dataset.save(dataset_test_location, include_question_type=True)

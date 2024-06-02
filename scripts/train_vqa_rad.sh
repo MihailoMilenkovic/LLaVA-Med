@@ -1,7 +1,7 @@
 script_dir=$(dirname "$(readlink -f "$0")")
 par_dir=$(dirname "$script_dir")
 weight_dir_og=$HOME/llava-weights-og
-weight_dir_finetuned=$HOME/llava-weights-finetuned-vqa-rad
+weight_dir_finetuned=$HOME/llava-weights-finetuned-vqa-rad-v2
 rm -rf $weight_dir_finetuned
 repo_dir=$HOME/git/LLaVA-Med
 
@@ -16,7 +16,7 @@ torchrun --nnodes=1 --nproc_per_node=1 --master_port=25001 \
     --tune_mm_mlp_adapter True \
     --bf16 True \
     --output_dir $weight_dir_finetuned \
-    --num_train_epochs 5 \
+    --num_train_epochs 3 \
     --per_device_train_batch_size 1 \
     --per_device_eval_batch_size 1 \
     --gradient_accumulation_steps 1 \
