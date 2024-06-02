@@ -5,6 +5,19 @@ weight_dir_finetuned=$HOME/llava-weights-finetuned-vqa-rad-v2
 rm -rf $weight_dir_finetuned
 repo_dir=$HOME/git/LLaVA-Med
 
+epochs=5
+lr=2e-5
+
+if [ "$1" == "--epochs" ]; then
+    epochs="$2"
+    shift 2
+fi
+
+if [ "$1" == "--lr" ]; then
+    lr="$2"
+    shift 2
+fi
+
 torchrun --nnodes=1 --nproc_per_node=1 --master_port=25001 \
     $par_dir/llava/train/train_mem.py \
     --model_name_or_path $weight_dir_og \
@@ -24,7 +37,7 @@ torchrun --nnodes=1 --nproc_per_node=1 --master_port=25001 \
     --save_strategy "steps" \
     --save_steps 500 \
     --save_total_limit 3 \
-    --learning_rate 2e-5 \
+    --learning_rate $lr \
     --weight_decay 0. \
     --warmup_ratio 0.03 \
     --lr_scheduler_type "cosine" \
